@@ -102,6 +102,7 @@ runs:
         run: |
           # TODO: When dropping deprecation support, change this back to ${{ inputs.lake-package-directory }}
           cd ${{ env.LAKE_PACKAGE_DIRECTORY }}
+          git init # create a git repository here to convince leanblueprint to work on the current directory
           # Install necessary dependencies and build the blueprint
           apk update
           apk add --update make py3-pip git pkgconfig graphviz graphviz-dev gcc musl-dev
@@ -123,6 +124,7 @@ runs:
           leanblueprint web
           echo "XXXXXXXXXXXXXXXXXXXXX6 ${PWD}"
           cp -r blueprint/web ${{ inputs.homepage }}/blueprint
+          rm -rf .git # clean up after the vacuous git repository we created
 
     - name: Check declarations mentioned in the blueprint exist in Lean code
       # TODO: When dropping deprecation support, change this back to: working-directory: ${{ inputs.lake-package-directory }}
