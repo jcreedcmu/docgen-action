@@ -108,14 +108,20 @@ runs:
           git config --global --add safe.directory $GITHUB_WORKSPACE
           git config --global --add safe.directory `pwd`
           python3 -m venv env
+          echo "XXXXXXXXXXXXXXXXXXXXX1 ${PWD} ${{ github.action_path }}"
           source env/bin/activate
           pip install --upgrade pip requests wheel
           pip install pygraphviz --config-settings="--global-option=build_ext" --config-settings="--global-option=-L/usr/lib/graphviz/" --config-settings="--global-option=-R/usr/lib/graphviz/"
+          echo "XXXXXXXXXXXXXXXXXXXXX2 ${PWD}"
           pip install leanblueprint
+          echo "XXXXXXXXXXXXXXXXXXXXX3 ${PWD}"
           leanblueprint pdf
+          echo "XXXXXXXXXXXXXXXXXXXXX4 ${PWD}"
           mkdir -p ${{ inputs.homepage }}
           cp blueprint/print/print.pdf ${{ inputs.homepage }}/blueprint.pdf
+          echo "XXXXXXXXXXXXXXXXXXXXX5 ${PWD}"
           leanblueprint web
+          echo "XXXXXXXXXXXXXXXXXXXXX6 ${PWD}"
           cp -r blueprint/web ${{ inputs.homepage }}/blueprint
 
     - name: Check declarations mentioned in the blueprint exist in Lean code
